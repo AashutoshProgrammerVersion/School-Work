@@ -1,0 +1,989 @@
+DECLARE ExitProgramOrNot : BOOLEAN
+ExitProgramOrNot <-- TRUE
+DECLARE DataTypesArray : ARRAY[1:6] OF STRING
+DECLARE UserChoice : STRING
+DECLARE NumberOfCharacters : INTEGER
+DECLARE RandomString1, RandomString2, RandomString3, RandomString4, RandomString5 : STRING
+DECLARE RandomNumber1, RandomNumber2 : INTEGER
+
+DataTypesArray[1] <-- "INTEGER"
+DataTypesArray[2] <-- "REAL"
+DataTypesArray[3] <-- "CHAR"
+DataTypesArray[4] <-- "STRING"
+DataTypesArray[5] <-- "BOOLEAN"
+DataTypesArray[6] <-- "DATE"
+
+
+
+FUNCTION InputChecker(UserChoice : STRING, Choice1 : STRING, Choice2 : STRING) RETURNS STRING
+
+    DECLARE Number : INTEGER
+    Number <-- 0
+
+    IF TO_LOWER(UserChoice) = Choice1 THEN
+        Number <-- 1
+        RETURN UserChoice
+    ENDIF
+    IF TO_LOWER(UserChoice) = Choice2 THEN
+        Number <-- 1
+        RETURN UserChoice
+    ENDIF
+    IF Number <> 1 THEN
+        Number <-- 0
+    ENDIF
+
+    WHILE Number = 0
+        OUTPUT ""
+        OUTPUT "Type in a valid input; either type ", Choice1, " or ", Choice2
+        INPUT UserChoice
+
+        IF TO_LOWER(UserChoice) = Choice1 THEN
+            Number <-- 1
+            RETURN UserChoice
+        ENDIF
+        IF TO_LOWER(UserChoice) = Choice2 THEN
+            Number <-- 1
+            RETURN UserChoice
+        ENDIF
+
+    ENDWHILE
+
+ENDFUNCTION
+
+
+PROCEDURE TeachProcedures()
+
+    RandomString1 <-- ""
+    RandomString2 <-- ""
+    RandomString3 <-- ""
+
+    OUTPUT "Firstly, subroutines are code that can called and executed anywhere in a program"
+    OUTPUT "Procedures are subroutines"
+    OUTPUT ""
+    OUTPUT ""
+    OUTPUT ""
+    OUTPUT "The general structure for procedures is as follows:"
+    OUTPUT "PROCEDURE <identifier>(<param1> : <data type>, <param2> : <data type>...)"
+    OUTPUT "    <statement(s)>"
+    OUTPUT "ENDPROCEDURE"
+    OUTPUT ""
+    OUTPUT "An example is as follows:"
+
+    RandomString1 <-- RandomString1 & CHR(INT(RAND(26)) + 65)
+    FOR NumberOfCharacters <-- 1 TO (INT(RAND(9)) + 1)
+        RandomString1 <-- RandomString1 & CHR(INT(RAND(26)) + 97)
+    NEXT NumberOfCharacters
+
+    RandomString2 <-- RandomString2 & CHR(INT(RAND(26)) + 65)
+    FOR NumberOfCharacters <-- 1 TO (INT(RAND(9)) + 1)
+        RandomString2 <-- RandomString2 & CHR(INT(RAND(26)) + 97)
+    NEXT NumberOfCharacters
+
+    RandomString3 <-- RandomString3 & CHR(INT(RAND(26)) + 65)
+    FOR NumberOfCharacters <-- 1 TO (INT(RAND(9)) + 1)
+        RandomString3 <-- RandomString3 & CHR(INT(RAND(26)) + 97)
+    NEXT NumberOfCharacters
+
+    OUTPUT "PROCEDURE ", RandomString1, "(", RandomString2, " : INTEGER, ", RandomString3, " : ", DataTypesArray[INT(RAND(6) + 1)], ")"
+    OUTPUT "    DECLARE Number1 : INTEGER"
+    OUTPUT "    Number1 <-- ", RandomString2, " + 8"
+    OUTPUT "    OUTPUT Number1"
+    OUTPUT "ENDPROCEDURE"
+    OUTPUT ""
+    OUTPUT ""
+    OUTPUT "However, in order for a procedure to run, it must be called and should have the input mentioned beside it in parenthesis/brackets (it can be empty if no input is required)"
+    OUTPUT "The basic structure is as follows:"
+    OUTPUT "CALL <identifer>(value1,value2..)"
+    OUTPUT ""
+    OUTPUT "An example is (consider 'Number2' declared):"
+    OUTPUT "CALL ", RandomString1, "(Number2, ...)"
+    OUTPUT ""
+    OUTPUT "This will output the sum of 'Number2' and 8 when the procedure is called, which is the same the sum of '", RandomString2, "' and 8 in this scenario"
+    OUTPUT ""
+    OUTPUT ""
+    OUTPUT "By default, only the values of the variables input to represent the parameters of the procedures that is called are passed and not the variables itself meaning the original variables are not affected (the procedure doesn't have to be written as the following, as the general structure does the same job)"
+    OUTPUT "PROCEDURE <identifier>(BYVAL <param1> : <data type>, <param2> : <data type>...)"
+    OUTPUT "    <statement(s)>"
+    OUTPUT "ENDPROCEDURE"
+    OUTPUT ""
+    OUTPUT "However, if you would like the procedure to change the original variable, you would have to write 'BYREF' instead of 'BYVAL' in the same place. Both of them will apply their effect for all the parameters within the procedure"
+    OUTPUT ""
+    OUTPUT "The following example will demonstrate both of their differences (consider 'Number3' as declared):"
+    OUTPUT "PROCEDURE ", RandomString1, "(BYVAL ", RandomString2, " : INTEGER, ", "...)"
+    OUTPUT "    ", RandomString2, " <-- ", RandomString2, " + 8"
+    OUTPUT "    OUTPUT ", RandomString2
+    OUTPUT "ENDPROCEDURE"
+    OUTPUT "Number3 <-- 1"
+    OUTPUT "CALL ", RandomString1, "(Number3, ...)"
+    OUTPUT ""
+    OUTPUT "This will output 9 but 'Number3' will remain as 1"
+    OUTPUT "If there was 'BYREF' instead of 'BYVAL', it will output 9 and also set 'Number3' as 9"
+
+ENDPROCEDURE
+
+PROCEDURE TeachFunctions()
+
+    RandomString1 <-- ""
+    RandomString2 <-- ""
+    RandomString3 <-- ""
+
+    OUTPUT "Firstly, subroutines are code that can called and executed anywhere in a program"
+    OUTPUT "Functions are subroutines that returns value(s)"
+    OUTPUT ""
+    OUTPUT ""
+    OUTPUT ""
+    OUTPUT "The general structure for functions is as follows:"
+    OUTPUT "FUNCTION <identifier>(<param1> : <data type>, <param2> : <data type>...) RETURNS <data type>"
+    OUTPUT "    <statement(s)>"
+    OUTPUT "ENDFUNCTION"
+    OUTPUT ""
+    OUTPUT "An example is as follows:"
+
+    RandomString1 <-- RandomString1 & CHR(INT(RAND(26)) + 65)
+    FOR NumberOfCharacters <-- 1 TO (INT(RAND(9)) + 1)
+        RandomString1 <-- RandomString1 & CHR(INT(RAND(26)) + 97)
+    NEXT NumberOfCharacters
+
+    RandomString2 <-- RandomString2 & CHR(INT(RAND(26)) + 65)
+    FOR NumberOfCharacters <-- 1 TO (INT(RAND(9)) + 1)
+        RandomString2 <-- RandomString2 & CHR(INT(RAND(26)) + 97)
+    NEXT NumberOfCharacters
+
+    RandomString3 <-- RandomString3 & CHR(INT(RAND(26)) + 65)
+    FOR NumberOfCharacters <-- 1 TO (INT(RAND(9)) + 1)
+        RandomString3 <-- RandomString3 & CHR(INT(RAND(26)) + 97)
+    NEXT NumberOfCharacters
+
+    OUTPUT "FUNCTION ", RandomString1, "(", RandomString2, " : STRING, ", RandomString3, " : ", DataTypesArray[INT(RAND(6) + 1)], ") RETURNS STRING"
+    OUTPUT "    DECLARE String1 : STRING"
+    OUTPUT "    String1 <-- ", RandomString2, " & 'o'"
+    OUTPUT "    RETURN String1"
+    OUTPUT "ENDFUNCTION"
+    OUTPUT ""
+    OUTPUT ""
+    OUTPUT "However, in order for a function to run, it must be part of an expression as it returns a value and should have the input mentioned beside it in parenthesis/brackets (it can be empty if no input is required) and must always have a RETURN statement"
+    OUTPUT ""
+    OUTPUT "An example is (consider 'String2' and 'String3' declared):"
+    OUTPUT "String2 <-- 'B'"
+    OUTPUT "String3 <-- ", RandomString1, "(String2, ...) & String2"
+    OUTPUT "OUTPUT String3"
+    OUTPUT ""
+    OUTPUT "This will output Bob (consider that string in speech marks)"
+    OUTPUT ""
+    OUTPUT "Also any subsequent lines (means the lines after something in this context) after the RETURN statement will be skipped if the RETURN statement is executed"
+    OUTPUT ""
+    OUTPUT ""
+    OUTPUT "By default, only the values of the variables input to represent the parameters of the function that is called are passed and not the variables itself meaning the original variables are not affected (the procedure doesn't have to be written as the following, as the general structure does the same job)"
+    OUTPUT "FUNCTION <identifier>(BYVAL <param1> : <data type>, <param2> : <data type>...) RETURNS <data type>"
+    OUTPUT "    <statement(s)>"
+    OUTPUT "ENDFUNCTION"
+    OUTPUT ""
+    OUTPUT "However, if you would like the function to change the original variable, you would have to write 'BYREF' instead of 'BYVAL' in the same place. Both of them will apply their effect for all the parameters within the function"
+    OUTPUT ""
+    OUTPUT "The following example will demonstrate both of their differences (consider 'String4' and 'String5' as declared):"
+    OUTPUT "FUNCTION ", RandomString1, "(BYVAL ", RandomString2, " : STRING, ", "...) RETURNS STRING"
+    OUTPUT "    ", RandomString2, " <-- ", RandomString2, " & 'g'"
+    OUTPUT "    RETURN ", RandomString2
+    OUTPUT "ENDFUNCTION"
+    OUTPUT "String4 <-- 'y'"
+    OUTPUT "String5 <-- ", RandomString1, "(String4, ...)"
+    OUTPUT "OUTPUT String5"
+    OUTPUT ""
+    OUTPUT "This will output yg (consider that string in speech marks) but 'String4' will remain as 'y'"
+    OUTPUT "If there was 'BYREF' instead of 'BYVAL', it will output yg (consider that string in speech marks) and also set 'String4' as yg (consider that string in speech marks)"
+    OUTPUT "It is encouraged to not use BYREF in an exam (not sure if you can use it in an exam or not) or in general scenarios to avoid unforseen changes to the variables that are input into the function when they are called"
+
+ENDPROCEDURE
+
+
+PROCEDURE PracticeStuffWithProcedures()
+
+    RandomString1 <-- ""
+    RandomString2 <-- ""
+    RandomString3 <-- ""
+    RandomString4 <-- ""
+    RandomString5 <-- ""
+
+    DECLARE RandomNumber : INTEGER
+    DECLARE InputString : STRING
+    RandomNumber <-- INT(RAND(7) + 1)
+
+    IF RandomNumber = 1 THEN
+        RandomNumber <-- INT(RAND(3) + 1)
+        IF RandomNumber = 1 THEN
+            OUTPUT ""
+            OUTPUT "Is this the structure of procedures of not? Type yes or no"
+            OUTPUT "PROCEDURE <identifier>(<param1> : <data type>, <param2> : <data type>...)"
+            OUTPUT "    <statement(s)>"
+            OUTPUT "ENDPROCEDURE"
+            OUTPUT ""
+
+            INPUT InputString
+            InputString <-- InputChecker(InputString, "yes", "no")
+
+            IF TO_LOWER(InputString) = "yes" THEN
+                OUTPUT "Correct"
+            ELSE
+                OUTPUT "Wrong"
+            ENDIF
+        ENDIF
+        IF RandomNumber = 2 THEN
+            OUTPUT ""
+            OUTPUT "Is this the structure of procedures of not? Type yes or no"
+            OUTPUT "PROCEDURE <identifier>(<param1> : <data type>, <param2> : <data type>...)"
+            OUTPUT "    <statement(s)>"
+            OUTPUT "ENDFUNCTION"
+            OUTPUT ""
+
+            INPUT InputString
+            InputString <-- InputChecker(InputString, "yes", "no")
+
+            IF TO_LOWER(InputString) = "no" THEN
+                OUTPUT "Correct"
+            ELSE
+                OUTPUT "Wrong"
+            ENDIF
+        ENDIF
+        IF RandomNumber = 3 THEN
+            OUTPUT ""
+            OUTPUT "Is this the structure of procedures of not? Type yes or no"
+            OUTPUT "PROCEDURE <identifier>(<param1> : <data type>, <param2> : <data type>...) RETURNS <data type>"
+            OUTPUT "    <statement(s)>"
+            OUTPUT "ENDPROCEDURE"
+            OUTPUT ""
+
+            INPUT InputString
+            InputString <-- InputChecker(InputString, "yes", "no")
+
+            IF TO_LOWER(InputString) = "no" THEN
+                OUTPUT "Correct"
+            ELSE
+                OUTPUT "Wrong"
+            ENDIF
+        ENDIF
+    ENDIF
+    IF RandomNumber = 2 THEN
+
+        RandomString1 <-- RandomString1 & CHR(INT(RAND(26)) + 65)
+        FOR NumberOfCharacters <-- 1 TO (INT(RAND(9)) + 1)
+            RandomString1 <-- RandomString1 & CHR(INT(RAND(26)) + 97)
+        NEXT NumberOfCharacters
+
+        RandomString2 <-- RandomString2 & CHR(INT(RAND(26)) + 65)
+        FOR NumberOfCharacters <-- 1 TO (INT(RAND(9)) + 1)
+            RandomString2 <-- RandomString2 & CHR(INT(RAND(26)) + 97)
+        NEXT NumberOfCharacters
+
+        RandomString3 <-- RandomString3 & CHR(INT(RAND(26)) + 65)
+        FOR NumberOfCharacters <-- 1 TO (INT(RAND(9)) + 1)
+            RandomString3 <-- RandomString3 & CHR(INT(RAND(26)) + 97)
+        NEXT NumberOfCharacters
+
+        OUTPUT ""
+        OUTPUT "Type the procedure name"
+        OUTPUT "PROCEDURE ", RandomString1, "(", RandomString2, " : ", DataTypesArray[INT(RAND(6) + 1)], ", ", RandomString3, " : ", DataTypesArray[INT(RAND(6) + 1)], ")"
+        OUTPUT "    DECLARE Number1 : INTEGER"
+        OUTPUT "    Number1 <-- 8"
+        OUTPUT "    OUTPUT Number1"
+        OUTPUT "ENDPROCEDURE"
+        OUTPUT ""
+
+        INPUT InputString
+
+        IF InputString = RandomString1 THEN
+            OUTPUT "Correct"
+        ELSE
+            OUTPUT "Wrong"
+        ENDIF
+    ENDIF
+    IF RandomNumber = 3 THEN
+
+        RandomString1 <-- RandomString1 & CHR(INT(RAND(26)) + 65)
+        FOR NumberOfCharacters <-- 1 TO (INT(RAND(9)) + 1)
+            RandomString1 <-- RandomString1 & CHR(INT(RAND(26)) + 97)
+        NEXT NumberOfCharacters
+
+        RandomString2 <-- RandomString2 & CHR(INT(RAND(26)) + 65)
+        FOR NumberOfCharacters <-- 1 TO (INT(RAND(9)) + 1)
+            RandomString2 <-- RandomString2 & CHR(INT(RAND(26)) + 97)
+        NEXT NumberOfCharacters
+
+        RandomString3 <-- RandomString3 & CHR(INT(RAND(26)) + 65)
+        FOR NumberOfCharacters <-- 1 TO (INT(RAND(9)) + 1)
+            RandomString3 <-- RandomString3 & CHR(INT(RAND(26)) + 97)
+        NEXT NumberOfCharacters
+
+        OUTPUT ""
+        OUTPUT "Type the 1st parameter's name"
+        OUTPUT "PROCEDURE ", RandomString1, "(", RandomString2, " : ", DataTypesArray[INT(RAND(6) + 1)], ", ", RandomString3, " : ", DataTypesArray[INT(RAND(6) + 1)], ")"
+        OUTPUT "    DECLARE Number1 : INTEGER"
+        OUTPUT "    Number1 <-- 8"
+        OUTPUT "    OUTPUT Number1"
+        OUTPUT "ENDPROCEDURE"
+        OUTPUT ""
+
+        INPUT InputString
+
+        IF InputString = RandomString2 THEN
+            OUTPUT "Correct"
+        ELSE
+            OUTPUT "Wrong"
+        ENDIF
+    ENDIF
+    IF RandomNumber = 4 THEN
+
+        RandomString1 <-- RandomString1 & CHR(INT(RAND(26)) + 65)
+        FOR NumberOfCharacters <-- 1 TO (INT(RAND(9)) + 1)
+            RandomString1 <-- RandomString1 & CHR(INT(RAND(26)) + 97)
+        NEXT NumberOfCharacters
+
+        RandomString2 <-- RandomString2 & CHR(INT(RAND(26)) + 65)
+        FOR NumberOfCharacters <-- 1 TO (INT(RAND(9)) + 1)
+            RandomString2 <-- RandomString2 & CHR(INT(RAND(26)) + 97)
+        NEXT NumberOfCharacters
+
+        RandomString3 <-- RandomString3 & CHR(INT(RAND(26)) + 65)
+        FOR NumberOfCharacters <-- 1 TO (INT(RAND(9)) + 1)
+            RandomString3 <-- RandomString3 & CHR(INT(RAND(26)) + 97)
+        NEXT NumberOfCharacters
+
+        RandomString4 <-- DataTypesArray[INT(RAND(6) + 1)]
+
+        OUTPUT ""
+        OUTPUT "Type the 2nd parameter's data type name"
+        OUTPUT "PROCEDURE ", RandomString1, "(", RandomString2, " : ", DataTypesArray[INT(RAND(6) + 1)], ", ", RandomString3, " : ", RandomString4, ")"
+        OUTPUT "    DECLARE Number1 : INTEGER"
+        OUTPUT "    Number1 <-- 8"
+        OUTPUT "    OUTPUT Number1"
+        OUTPUT "ENDPROCEDURE"
+        OUTPUT ""
+
+        INPUT InputString
+
+        IF InputString = RandomString4 THEN
+            OUTPUT "Correct, the answer must be in capital as in ", RandomString4
+        ELSE
+            OUTPUT "Wrong, the answer must be in capital as in ", RandomString4
+        ENDIF
+    ENDIF
+    IF RandomNumber = 5 THEN
+        RandomNumber <-- INT(RAND(2))
+        RandomString1 <-- RandomString1 & CHR(INT(RAND(26)) + 65)
+        FOR NumberOfCharacters <-- 1 TO (INT(RAND(9)) + 1)
+            RandomString1 <-- RandomString1 & CHR(INT(RAND(26)) + 97)
+        NEXT NumberOfCharacters
+
+        RandomString2 <-- RandomString2 & CHR(INT(RAND(26)) + 65)
+        FOR NumberOfCharacters <-- 1 TO (INT(RAND(9)) + 1)
+            RandomString2 <-- RandomString2 & CHR(INT(RAND(26)) + 97)
+        NEXT NumberOfCharacters
+
+        RandomString3 <-- RandomString3 & CHR(INT(RAND(26)) + 65)
+        FOR NumberOfCharacters <-- 1 TO (INT(RAND(9)) + 1)
+            RandomString3 <-- RandomString3 & CHR(INT(RAND(26)) + 97)
+        NEXT NumberOfCharacters
+        IF RandomNumber = 1 THEN
+
+            RandomNumber1 <-- INT(RAND(3))
+            RandomNumber2 <-- INT(RAND(8))
+            OUTPUT ""
+            OUTPUT "Is this BYREF or BVAL? Type either of them in lowercase"
+            OUTPUT "PROCEDURE ", RandomString1, "(_____ ", RandomString2, " : INTEGER, ", "...)"
+            OUTPUT "    ", RandomString2, " <-- ", RandomString2, " + ", NUM_TO_STR(RandomNumber1)
+            OUTPUT "    OUTPUT ", RandomString2
+            OUTPUT "ENDPROCEDURE"
+            OUTPUT "Number3 <-- ", NUM_TO_STR(RandomNumber2)
+            OUTPUT "CALL ", RandomString1, "(Number3, ...)"
+            OUTPUT "'Number3' is ", NUM_TO_STR(RandomNumber1 + RandomNumber2), ", the output is ", NUM_TO_STR(RandomNumber1 + RandomNumber2)
+            OUTPUT ""
+
+            INPUT InputString
+            InputString <-- InputChecker(InputString, "byval", "byref")
+
+            IF TO_LOWER(InputString) = "byref" THEN
+                OUTPUT "Correct, remember to always type byref in capital"
+            ELSE
+                OUTPUT "Wrong, remember to always type byref in capital"
+            ENDIF
+        ELSE
+
+            RandomNumber1 <-- INT(RAND(3))
+            RandomNumber2 <-- INT(RAND(8))
+            OUTPUT ""
+            OUTPUT "Is this BYREF or BVAL? Type either of them in lowercase"
+            OUTPUT "PROCEDURE ", RandomString1, "(_____ ", RandomString2, " : INTEGER, ", "...)"
+            OUTPUT "    ", RandomString2, " <-- ", RandomString2, " + ", NUM_TO_STR(RandomNumber1)
+            OUTPUT "    OUTPUT ", RandomString2
+            OUTPUT "ENDPROCEDURE"
+            OUTPUT "Number3 <-- ", NUM_TO_STR(RandomNumber2)
+            OUTPUT "CALL ", RandomString1, "(Number3, ...)"
+            OUTPUT "'Number3' is ", NUM_TO_STR(RandomNumber2), ", the output is ", NUM_TO_STR(RandomNumber1 + RandomNumber2)
+            OUTPUT ""
+
+            INPUT InputString
+            InputString <-- InputChecker(InputString, "byval", "byref")
+
+            IF TO_LOWER(InputString) = "byval" THEN
+                OUTPUT "Correct, remember to always type byval in capital"
+            ELSE
+                OUTPUT "Wrong, remember to always type byval in capital"
+            ENDIF
+        ENDIF
+    ENDIF
+    IF RandomNumber = 6 THEN
+        RandomNumber <-- INT(RAND(2))
+        RandomString1 <-- RandomString1 & CHR(INT(RAND(26)) + 65)
+        FOR NumberOfCharacters <-- 1 TO (INT(RAND(9)) + 1)
+            RandomString1 <-- RandomString1 & CHR(INT(RAND(26)) + 97)
+        NEXT NumberOfCharacters
+
+        RandomString2 <-- RandomString2 & CHR(INT(RAND(26)) + 65)
+        FOR NumberOfCharacters <-- 1 TO (INT(RAND(9)) + 1)
+            RandomString2 <-- RandomString2 & CHR(INT(RAND(26)) + 97)
+        NEXT NumberOfCharacters
+
+        RandomString3 <-- RandomString3 & CHR(INT(RAND(26)) + 65)
+        FOR NumberOfCharacters <-- 1 TO (INT(RAND(9)) + 1)
+            RandomString3 <-- RandomString3 & CHR(INT(RAND(26)) + 97)
+        NEXT NumberOfCharacters
+        IF RandomNumber = 1 THEN
+
+            OUTPUT ""
+            OUTPUT "Does the statement below call procedures correctly? Type yes or no"
+            OUTPUT "Number1 <-- ", RandomString1, "(", RandomString2, ", ", RandomString3, ")"
+            OUTPUT ""
+
+            INPUT InputString
+            InputString <-- InputChecker(InputString, "yes", "no")
+
+            IF TO_LOWER(InputString) = "no" THEN
+                OUTPUT "Correct, you must use a CALL statement like 'CALL <identifer>(value1,value2..)'"
+            ELSE
+                OUTPUT "Wrong, you must use a CALL statement like 'CALL <identifer>(value1,value2..)'"
+            ENDIF
+        ELSE
+
+            OUTPUT ""
+            OUTPUT "Does the statement below call procedures correctly? Type yes or no"
+            OUTPUT "CALL ", RandomString1, "(", RandomString2, ", ", RandomString3, ")"
+            OUTPUT ""
+
+            INPUT InputString
+            InputString <-- InputChecker(InputString, "yes", "no")
+
+            IF TO_LOWER(InputString) = "yes" THEN
+                OUTPUT "Correct, you must use a CALL statement like 'CALL <identifer>(value1,value2..)'"
+            ELSE
+                OUTPUT "Wrong, you must use a CALL statement like 'CALL <identifer>(value1,value2..)'"
+            ENDIF
+        ENDIF
+    ENDIF
+    IF RandomNumber = 7 THEN
+        OUTPUT ""
+        OUTPUT "Is it okay to use byref in procedures or not? Type yes or no"
+        OUTPUT ""
+
+        INPUT InputString
+        InputString <-- InputChecker(InputString, "yes", "no")
+
+        IF TO_LOWER(InputString) = "yes" THEN
+            OUTPUT "Correct, it is alright to use byref in procedures"
+        ELSE
+            OUTPUT "Wrong, it is alright to use byref in procedures"
+        ENDIF
+
+    ENDIF
+
+ENDPROCEDURE
+
+PROCEDURE PracticeStuffWithFunctions()
+
+    RandomString1 <-- ""
+    RandomString2 <-- ""
+    RandomString3 <-- ""
+    RandomString4 <-- ""
+    RandomString5 <-- ""
+
+    DECLARE RandomNumber : INTEGER
+    DECLARE InputString, InputString1 : STRING
+    RandomNumber <-- INT(RAND(9) + 1)
+
+    IF RandomNumber = 1 THEN
+        RandomNumber <-- INT(RAND(3) + 1)
+        IF RandomNumber = 1 THEN
+            OUTPUT ""
+            OUTPUT "Is this the structure of functions of not? Type yes or no"
+            OUTPUT "FUNCTION <identifier>(<param1> : <data type>, <param2> : <data type>...) RETURNS <data type>"
+            OUTPUT "    <statement(s)>"
+            OUTPUT "ENDFUNCTION"
+            OUTPUT ""
+
+            INPUT InputString
+            InputString <-- InputChecker(InputString, "yes", "no")
+
+            IF TO_LOWER(InputString) = "yes" THEN
+                OUTPUT "Correct"
+            ELSE
+                OUTPUT "Wrong"
+            ENDIF
+        ENDIF
+        IF RandomNumber = 2 THEN
+            OUTPUT ""
+            OUTPUT "Is this the structure of functions of not? Type yes or no"
+            OUTPUT "PROCEDURE <identifier>(<param1> : <data type>, <param2> : <data type>...) RETURNS <data type>"
+            OUTPUT "    <statement(s)>"
+            OUTPUT "ENDFUNCTION"
+            OUTPUT ""
+
+            INPUT InputString
+            InputString <-- InputChecker(InputString, "yes", "no")
+
+            IF TO_LOWER(InputString) = "no" THEN
+                OUTPUT "Correct"
+            ELSE
+                OUTPUT "Wrong"
+            ENDIF
+        ENDIF
+        IF RandomNumber = 3 THEN
+            OUTPUT ""
+            OUTPUT "Is this the structure of functions of not? Type yes or no"
+            OUTPUT "FUNCTION <identifier>(<param1> : <data type>, <param2> : <data type>...)"
+            OUTPUT "    <statement(s)>"
+            OUTPUT "ENDFUNCTION"
+            OUTPUT ""
+
+            INPUT InputString
+            InputString <-- InputChecker(InputString, "yes", "no")
+
+            IF TO_LOWER(InputString) = "no" THEN
+                OUTPUT "Correct"
+            ELSE
+                OUTPUT "Wrong"
+            ENDIF
+        ENDIF
+    ENDIF
+    IF RandomNumber = 2 THEN
+
+        RandomString1 <-- RandomString1 & CHR(INT(RAND(26)) + 65)
+        FOR NumberOfCharacters <-- 1 TO (INT(RAND(9)) + 1)
+            RandomString1 <-- RandomString1 & CHR(INT(RAND(26)) + 97)
+        NEXT NumberOfCharacters
+
+        RandomString2 <-- RandomString2 & CHR(INT(RAND(26)) + 65)
+        FOR NumberOfCharacters <-- 1 TO (INT(RAND(9)) + 1)
+            RandomString2 <-- RandomString2 & CHR(INT(RAND(26)) + 97)
+        NEXT NumberOfCharacters
+
+        RandomString3 <-- RandomString3 & CHR(INT(RAND(26)) + 65)
+        FOR NumberOfCharacters <-- 1 TO (INT(RAND(9)) + 1)
+            RandomString3 <-- RandomString3 & CHR(INT(RAND(26)) + 97)
+        NEXT NumberOfCharacters
+
+        OUTPUT ""
+        OUTPUT "Type the function name"
+        OUTPUT "FUNCTION ", RandomString1, "(", RandomString2, " : ", DataTypesArray[INT(RAND(6) + 1)], ", ", RandomString3, " : ", DataTypesArray[INT(RAND(6) + 1)], ") RETURNS INTEGER"
+        OUTPUT "    DECLARE Number1 : INTEGER"
+        OUTPUT "    Number1 <-- 8"
+        OUTPUT "    RETURN Number1"
+        OUTPUT "ENDFUNCTION"
+        OUTPUT ""
+
+        INPUT InputString
+
+        IF InputString = RandomString1 THEN
+            OUTPUT "Correct"
+        ELSE
+            OUTPUT "Wrong"
+        ENDIF
+    ENDIF
+    IF RandomNumber = 3 THEN
+
+        RandomString1 <-- RandomString1 & CHR(INT(RAND(26)) + 65)
+        FOR NumberOfCharacters <-- 1 TO (INT(RAND(9)) + 1)
+            RandomString1 <-- RandomString1 & CHR(INT(RAND(26)) + 97)
+        NEXT NumberOfCharacters
+
+        RandomString2 <-- RandomString2 & CHR(INT(RAND(26)) + 65)
+        FOR NumberOfCharacters <-- 1 TO (INT(RAND(9)) + 1)
+            RandomString2 <-- RandomString2 & CHR(INT(RAND(26)) + 97)
+        NEXT NumberOfCharacters
+
+        RandomString3 <-- RandomString3 & CHR(INT(RAND(26)) + 65)
+        FOR NumberOfCharacters <-- 1 TO (INT(RAND(9)) + 1)
+            RandomString3 <-- RandomString3 & CHR(INT(RAND(26)) + 97)
+        NEXT NumberOfCharacters
+
+        OUTPUT ""
+        OUTPUT "Type the 2nd parameter's name"
+        OUTPUT "FUNCTION ", RandomString1, "(", RandomString2, " : ", DataTypesArray[INT(RAND(6) + 1)], ", ", RandomString3, " : ", DataTypesArray[INT(RAND(6) + 1)], ") RETURNS INTEGER"
+        OUTPUT "    DECLARE Number1 : INTEGER"
+        OUTPUT "    Number1 <-- 8"
+        OUTPUT "    RETURN Number1"
+        OUTPUT "ENDFUNCTION"
+        OUTPUT ""
+
+        INPUT InputString
+
+        IF InputString = RandomString3 THEN
+            OUTPUT "Correct"
+        ELSE
+            OUTPUT "Wrong"
+        ENDIF
+    ENDIF
+    IF RandomNumber = 4 THEN
+
+        RandomString1 <-- RandomString1 & CHR(INT(RAND(26)) + 65)
+        FOR NumberOfCharacters <-- 1 TO (INT(RAND(9)) + 1)
+            RandomString1 <-- RandomString1 & CHR(INT(RAND(26)) + 97)
+        NEXT NumberOfCharacters
+
+        RandomString2 <-- RandomString2 & CHR(INT(RAND(26)) + 65)
+        FOR NumberOfCharacters <-- 1 TO (INT(RAND(9)) + 1)
+            RandomString2 <-- RandomString2 & CHR(INT(RAND(26)) + 97)
+        NEXT NumberOfCharacters
+
+        RandomString3 <-- RandomString3 & CHR(INT(RAND(26)) + 65)
+        FOR NumberOfCharacters <-- 1 TO (INT(RAND(9)) + 1)
+            RandomString3 <-- RandomString3 & CHR(INT(RAND(26)) + 97)
+        NEXT NumberOfCharacters
+
+        RandomString4 <-- DataTypesArray[INT(RAND(6) + 1)]
+
+        OUTPUT ""
+        OUTPUT "Type the 1st parameter's data type name"
+        OUTPUT "FUNCTION ", RandomString1, "(", RandomString2, " : ", RandomString4, ", ", RandomString3, " : ", DataTypesArray[INT(RAND(6) + 1)], ") RETURNS INTEGER"
+        OUTPUT "    DECLARE Number1 : INTEGER"
+        OUTPUT "    Number1 <-- 8"
+        OUTPUT "    OUTPUT Number1"
+        OUTPUT "ENDFUNCTION"
+        OUTPUT ""
+
+        INPUT InputString
+
+        IF InputString = RandomString4 THEN
+            OUTPUT "Correct"
+        ELSE
+            OUTPUT "Wrong"
+        ENDIF
+    ENDIF
+    IF RandomNumber = 5 THEN
+        RandomNumber <-- INT(RAND(2))
+        RandomString1 <-- RandomString1 & CHR(INT(RAND(26)) + 65)
+        FOR NumberOfCharacters <-- 1 TO (INT(RAND(9)) + 1)
+            RandomString1 <-- RandomString1 & CHR(INT(RAND(26)) + 97)
+        NEXT NumberOfCharacters
+
+        RandomString2 <-- RandomString2 & CHR(INT(RAND(26)) + 65)
+        FOR NumberOfCharacters <-- 1 TO (INT(RAND(9)) + 1)
+            RandomString2 <-- RandomString2 & CHR(INT(RAND(26)) + 97)
+        NEXT NumberOfCharacters
+
+        IF RandomNumber = 1 THEN
+            OUTPUT ""
+            OUTPUT "Is this BYREF or BVAL? Type either of them in lowercase"
+            OUTPUT "FUNCTION ", RandomString1, "(_____ ", RandomString2, " : STRING, ", "...) RETURNS STRING"
+            OUTPUT "    ", RandomString2, " <-- ", RandomString2, " & 'h'"
+            OUTPUT "    RETURN ", RandomString2
+            OUTPUT "ENDFUNCTION"
+            OUTPUT "String4 <-- 't'"
+            OUTPUT "String5 <-- ", RandomString1, "(String4, ...)"
+            OUTPUT "OUTPUT String5"
+            OUTPUT "String4 is th (consider there are speech marks besides that string) and String5 is th (consider there are speech marks besides that string)"
+            OUTPUT ""
+
+            INPUT InputString
+            InputString <-- InputChecker(InputString, "byval", "byref")
+
+            IF TO_UPPER(InputString) = "BYREF" THEN
+                OUTPUT "Correct"
+            ELSE
+                OUTPUT "Wrong"
+            ENDIF
+        ELSE
+            OUTPUT ""
+            OUTPUT "Is this BYREF or BVAL? Type either of them in lowercase"
+            OUTPUT "FUNCTION ", RandomString1, "(_____ ", RandomString2, " : STRING, ", "...) RETURNS STRING"
+            OUTPUT "    ", RandomString2, " <-- ", RandomString2, " & 'h'"
+            OUTPUT "    RETURN ", RandomString2
+            OUTPUT "ENDFUNCTION"
+            OUTPUT "String4 <-- 't'"
+            OUTPUT "String5 <-- ", RandomString1, "(String4, ...)"
+            OUTPUT "OUTPUT String5"
+            OUTPUT "String4 is t (consider there are speech marks besides that string) and String5 is th (consider there are speech marks besides that string)"
+            OUTPUT ""
+
+            INPUT InputString
+            InputString <-- InputChecker(InputString, "byval", "byref")
+
+            IF TO_LOWER(InputString) = "byval" THEN
+                OUTPUT "Correct"
+            ELSE
+                OUTPUT "Wrong"
+            ENDIF
+        ENDIF
+    ENDIF
+    IF RandomNumber = 6 THEN
+        RandomNumber <-- INT(RAND(2))
+        RandomString1 <-- RandomString1 & CHR(INT(RAND(26)) + 65)
+        FOR NumberOfCharacters <-- 1 TO (INT(RAND(9)) + 1)
+            RandomString1 <-- RandomString1 & CHR(INT(RAND(26)) + 97)
+        NEXT NumberOfCharacters
+
+        RandomString2 <-- RandomString2 & CHR(INT(RAND(26)) + 65)
+        FOR NumberOfCharacters <-- 1 TO (INT(RAND(9)) + 1)
+            RandomString2 <-- RandomString2 & CHR(INT(RAND(26)) + 97)
+        NEXT NumberOfCharacters
+
+        RandomString3 <-- RandomString3 & CHR(INT(RAND(26)) + 65)
+        FOR NumberOfCharacters <-- 1 TO (INT(RAND(9)) + 1)
+            RandomString3 <-- RandomString3 & CHR(INT(RAND(26)) + 97)
+        NEXT NumberOfCharacters
+        IF RandomNumber = 1 THEN
+
+            OUTPUT ""
+            OUTPUT "Does the statement below call functions correctly? Type yes or no"
+            OUTPUT "String1 <-- ", RandomString1, "(", RandomString2, ", ", RandomString3, ")"
+            OUTPUT ""
+
+            INPUT InputString
+            InputString <-- InputChecker(InputString, "yes", "no")
+
+            IF TO_LOWER(InputString) = "yes" THEN
+                OUTPUT "Correct, you must make functions as a part of a function to call them as they return a value and it needs to be stored"
+            ELSE
+                OUTPUT "Wrong, Correct, you must make functions as a part of a function to call them as they return a value and it needs to be stored"
+            ENDIF
+        ELSE
+
+            OUTPUT ""
+            OUTPUT "Does the statement below call functions correctly? Type yes or no"
+            OUTPUT "CALL ", RandomString1, "(", RandomString2, ", ", RandomString3, ")"
+            OUTPUT ""
+
+            INPUT InputString
+            InputString <-- InputChecker(InputString, "yes", "no")
+
+            IF TO_LOWER(InputString) = "no" THEN
+                OUTPUT "Correct, you must make functions as a part of a function to call them as they return a value and it needs to be stored"
+            ELSE
+                OUTPUT "Wrong, you must make functions as a part of a function to call them as they return a value and it needs to be stored"
+            ENDIF
+        ENDIF
+    ENDIF
+    IF RandomNumber = 7 THEN
+        RandomNumber <-- INT(RAND(2))
+        RandomString1 <-- RandomString1 & CHR(INT(RAND(26)) + 65)
+        FOR NumberOfCharacters <-- 1 TO (INT(RAND(9)) + 1)
+            RandomString1 <-- RandomString1 & CHR(INT(RAND(26)) + 97)
+        NEXT NumberOfCharacters
+
+        RandomString2 <-- RandomString2 & CHR(INT(RAND(26)) + 65)
+        FOR NumberOfCharacters <-- 1 TO (INT(RAND(9)) + 1)
+            RandomString2 <-- RandomString2 & CHR(INT(RAND(26)) + 97)
+        NEXT NumberOfCharacters
+
+        RandomString3 <-- RandomString3 & CHR(INT(RAND(26)) + 65)
+        FOR NumberOfCharacters <-- 1 TO (INT(RAND(9)) + 1)
+            RandomString3 <-- RandomString3 & CHR(INT(RAND(26)) + 97)
+        NEXT NumberOfCharacters
+        IF RandomNumber = 1 THEN
+
+            OUTPUT ""
+            OUTPUT "Does this question return a value or not? Type yes or no"
+            OUTPUT "FUNCTION ", RandomString1, "(", RandomString2, " : ", DataTypesArray[INT(RAND(6) + 1)], ", ", RandomString3, " : ", DataTypesArray[INT(RAND(6) + 1)], ") RETURNS INTEGER"
+            OUTPUT "    DECLARE Number1 : INTEGER"
+            OUTPUT "    Number1 <-- 8"
+            OUTPUT "ENDFUNCTION"
+            OUTPUT ""
+
+            INPUT InputString
+            InputString <-- InputChecker(InputString, "yes", "no")
+
+            IF TO_LOWER(InputString) = "no" THEN
+                OUTPUT "Correct, there is no return statement in the function"
+            ELSE
+                OUTPUT "Correct, there is no return statement in the function"
+            ENDIF
+
+        ELSE
+
+            RandomString4 <- DataTypesArray[INT(RAND(6) + 1)]
+            RandomString5 <- DataTypesArray[INT(RAND(6) + 1)]
+
+            OUTPUT ""
+            OUTPUT "Does this question return a value or not (consider the variables declared)? Type yes or no"
+            OUTPUT "FUNCTION ", RandomString1, "(", RandomString2, " : ", RandomString4, ", ", RandomString3, " : ", DataTypesArray[INT(RAND(6) + 1)], ") RETURNS ", RandomString5
+            OUTPUT "    RETURN ", RandomString2
+            OUTPUT "ENDFUNCTION"
+            OUTPUT "Output <-- ", RandomString1, "(...)"
+            OUTPUT ""
+
+            INPUT InputString
+            InputString <-- InputChecker(InputString, "yes", "no")
+
+            IF RandomString4 = RandomString5 THEN
+                IF TO_LOWER(InputString) = "yes" THEN
+                    OUTPUT "Correct, the parameter that is returned is a matching data type to that the function is trying to return (check the definition line of the function)"
+                ELSE
+                    OUTPUT "Wrong, the parameter that is returned is a matching data type to that the function is trying to return (check the definition line of the function)"
+                ENDIF
+            ELSE
+                IF TO_LOWER(InputString) = "no" THEN
+                    OUTPUT "Correct, the parameter that is returned is not a matching data type to that the function is trying to return (check the definition line of the function)"
+                ELSE
+                    OUTPUT "Wrong, the parameter that is returned is not a matching data type to that the function is trying to return (check the definition line of the function)"
+                ENDIF
+            ENDIF
+
+        ENDIF
+    ENDIF
+    IF RandomNumber = 8 THEN
+
+        RandomString1 <-- RandomString1 & CHR(INT(RAND(26)) + 65)
+        FOR NumberOfCharacters <-- 1 TO (INT(RAND(9)) + 1)
+            RandomString1 <-- RandomString1 & CHR(INT(RAND(26)) + 97)
+        NEXT NumberOfCharacters
+
+        RandomString2 <-- RandomString2 & CHR(INT(RAND(26)) + 65)
+        FOR NumberOfCharacters <-- 1 TO (INT(RAND(9)) + 1)
+            RandomString2 <-- RandomString2 & CHR(INT(RAND(26)) + 97)
+        NEXT NumberOfCharacters
+
+        RandomString3 <-- RandomString3 & CHR(INT(RAND(26)) + 65)
+        FOR NumberOfCharacters <-- 1 TO (INT(RAND(9)) + 1)
+            RandomString3 <-- RandomString3 & CHR(INT(RAND(26)) + 97)
+        NEXT NumberOfCharacters
+
+        RandomNumber <-- INT(RAND(2))
+
+        OUTPUT ""
+        OUTPUT "How many values output when the code below is executed (imagine all variables are declared)? Type 1 or 2"
+        OUTPUT "FUNCTION ", RandomString1, "(", RandomString2, " : INTEGER, ", RandomString3, " : ", DataTypesArray[INT(RAND(6) + 1)], ") RETURNS INTEGER"
+        OUTPUT "    OUTPUT 10"
+        OUTPUT "    IF ", RandomString2, " = 0 THEN"
+        OUTPUT "        RETURN 2"
+        OUTPUT "    ENDIF"
+        OUTPUT "    OUTPUT 5"
+        OUTPUT "ENDFUNCTION"
+        OUTPUT "Number <-- ", RandomString1, "(", NUM_TO_STR(RandomNumber),", ...)"
+        OUTPUT ""
+        
+        INPUT InputString
+
+        IF RandomNumber = 0 THEN
+            IF InputString = "1" THEN
+                OUTPUT "Correct, the only output is 10 as the return statement is executed and the lines after are skipped"
+            ELSE
+                OUTPUT "Wrong, the only output is 10 as the return statement is executed and the lines after are skipped"
+            ENDIF
+        ELSE
+            IF InputString = "2" THEN
+                OUTPUT "Correct, the output is 10 and 5 as the return statement is not executed and the lines aren't skipped"
+            ELSE
+                OUTPUT "Wrong, the output is 10 and 5 as the return statement is not executed and the lines aren't skipped"
+            ENDIF
+        ENDIF
+
+    ENDIF
+    IF RandomNumber = 9 THEN
+        OUTPUT ""
+        OUTPUT "Is it advisable to use byref in functions or not? Type yes or no"
+        OUTPUT ""
+
+        INPUT InputString
+        InputString <-- InputChecker(InputString, "yes", "no")
+
+        IF TO_LOWER(InputString) = "no" THEN
+            OUTPUT "Correct, it is not advisable although I am not sure"
+        ELSE
+            OUTPUT "Wrong, it is not advisable although I am not sure"
+        ENDIF
+
+    ENDIF
+ENDPROCEDURE
+
+
+WHILE ExitProgramOrNot = TRUE
+    OUTPUT ""
+    OUTPUT ""
+    OUTPUT ""
+    OUTPUT ""
+    OUTPUT ""
+    OUTPUT ""
+    OUTPUT "This program explains how to use functions and procedures according to the syllabus 9618 CIE AS & A Level Computer Science 2024 and also provides practice for it"
+    OUTPUT "Made by Aashutosh Mali, Github link - https://github.com/AashutoshProgrammerVersion"
+    OUTPUT ""
+    OUTPUT ""
+    OUTPUT ""
+    OUTPUT ""
+    OUTPUT ""
+    OUTPUT ""
+
+    OUTPUT "Would you like to learn about procedures or functions or practice stuff to do with it? Type learn or practice:"
+
+    INPUT UserChoice
+    UserChoice <-- InputChecker(UserChoice, "learn", "practice")
+
+    IF TO_LOWER(UserChoice) = "learn" THEN
+        OUTPUT ""
+        OUTPUT ""
+        OUTPUT ""
+        OUTPUT ""
+        OUTPUT ""
+        OUTPUT "Would you like to learn procedures or functions? Type procedures or functions:"
+
+        INPUT UserChoice
+        UserChoice <-- InputChecker(UserChoice, "procedures", "functions")
+
+        IF TO_LOWER(UserChoice) = "procedures" THEN
+            CALL TeachProcedures()
+        ELSE
+            CALL TeachFunctions()
+        ENDIF
+        
+    ELSE
+        OUTPUT ""
+        OUTPUT ""
+        OUTPUT ""
+        OUTPUT ""
+        OUTPUT "Would you like to practice procedures or functions? Type procedures or functions:"
+
+        INPUT UserChoice
+        UserChoice <-- InputChecker(UserChoice, "procedures", "functions")
+
+        IF TO_LOWER(UserChoice) = "procedures" THEN
+            OUTPUT ""
+            OUTPUT "Enter the number of questions you want:"
+            INPUT RandomNumber1
+            WHILE RandomNumber1 <= 0
+                OUTPUT ""
+                OUTPUT "Enter a valid number (must be greater than 0)"
+                INPUT RandomNumber1
+            ENDWHILE
+            FOR NumberOfCharacters <-- 1 TO RandomNumber1
+                CALL PracticeStuffWithProcedures()
+            NEXT NumberOfCharacters
+        ELSE
+            OUTPUT ""
+            OUTPUT "Enter the number of questions you want:"
+            INPUT RandomNumber1
+            WHILE RandomNumber1 <= 0
+                OUTPUT ""
+                OUTPUT "Enter a valid number (must be greater than 0)"
+                INPUT RandomNumber1
+            ENDWHILE
+            FOR NumberOfCharacters <-- 1 TO RandomNumber1
+                CALL PracticeStuffWithFunctions()
+            NEXT NumberOfCharacters
+        ENDIF
+    ENDIF
+
+    OUTPUT "Would you like to quit the program or use it again? Type 'q' for quitting the program or 'u' to use it again"
+    INPUT UserChoice
+    UserChoice <-- InputChecker(UserChoice, "q", "u")
+
+    IF TO_LOWER(UserChoice) = "q" THEN
+        ExitProgramOrNot <-- FALSE
+    ENDIF
+
+ENDWHILE
